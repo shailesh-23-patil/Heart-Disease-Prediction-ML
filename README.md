@@ -1,18 +1,18 @@
 # Heart Disease Prediction ML
 
-Repository: Heart-Disease-Prediction-ML
-
-This project focuses on predicting whether a patient is likely to have heart disease based on clinical and lifestyle-related features. It combines data cleaning, exploratory analysis, feature engineering, and predictive modeling.
+A machine learning project that analyzes clinical data and builds classification models to predict the likelihood of heart disease based on patient health indicators.
 
 ## Project Goal
 
-The main objective is to build a model that can classify whether a patient has heart disease using parameters such as age, cholesterol, resting blood pressure, chest pain type, exercise-induced angina, max heart rate, and other medical indicators.
+The objective is to explore relationships between clinical features and heart disease, perform data cleaning and feature engineering, and compare machine learning models for binary classification.
+
+The project demonstrates a complete machine learning workflow, including exploratory data analysis, preprocessing, model training, and performance evaluation.
 
 ## Dataset
 
-- File: `heart.csv`
-- Target variable: `HeartDisease`
-- Features include:
+- **Dataset:** `heart.csv`
+- **Target variable:** `HeartDisease`
+- **Features:**
   - `Age`
   - `Sex`
   - `ChestPainType`
@@ -25,90 +25,145 @@ The main objective is to build a model that can classify whether a patient has h
   - `Oldpeak`
   - `ST_Slope`
 
-## Data Cleaning and Data Quality Issues
+## Data Cleaning and Quality Checks
 
-A major part of this project is identifying hidden data-quality problems:
+The project investigates data-quality issues and prepares the dataset for machine learning:
 
-- Cholesterol values of `0` are impossible for a living person and were treated as missing values.
-- Resting blood pressure values of `0` were also treated as missing.
-- A missing-value flag was added so the model could learn whether the absence of a measurement itself was informative.
-- The data was cleaned before modeling to avoid leakage and misleading results.
+- Identifies potentially invalid zero values in cholesterol and resting blood pressure.
+- Handles missing or invalid measurements using appropriate preprocessing techniques.
+- Creates missing-value indicators where appropriate.
+- Checks data consistency before model training.
+- Separates training and testing data to help prevent data leakage.
 
-## Exploratory Data Analysis
+**Note:** Zero cholesterol and blood pressure values should be reviewed in the context of the dataset before being treated as missing.
 
-The notebook explores patterns such as:
+## Exploratory Data Analysis (EDA)
 
-- heart disease rate by age and cholesterol
-- relationship between chest pain type and disease occurrence
-- differences in heart disease prevalence by sex
-- variation in max heart rate and blood pressure
-- features like `ST_Slope`, `ExerciseAngina`, and `FastingBS` as strong clinical indicators
+The notebook explores patterns and relationships involving:
+
+- Heart disease prevalence across age groups.
+- Relationships between chest pain type and heart disease.
+- Differences in disease prevalence by sex.
+- Cholesterol and resting blood pressure distributions.
+- Maximum heart rate and exercise-induced angina.
+- Clinical indicators such as `ST_Slope`, `FastingBS`, and `Oldpeak`.
+
+Visualizations help identify trends, distributions, and potential relationships in the data.
 
 ## Feature Engineering
 
-The analysis creates several engineered features, including:
+The project investigates additional features that may help capture useful patterns:
 
-- `Cholesterol_missing` flag
-- `HighBP`
-- `HighCholesterol`
-- `AgeGroup`
-- `RiskScore`
+- `Cholesterol_missing` — indicates missing or invalid cholesterol measurements.
+- `HighBP` — represents elevated blood pressure based on a defined threshold.
+- `HighCholesterol` — represents elevated cholesterol based on a defined threshold.
+- `AgeGroup` — groups patients into age categories.
+- `RiskScore` — combines selected indicators according to the project's defined logic.
 
-This improves the ability of the model to capture combinations of medical factors that are clinically meaningful.
+The usefulness of engineered features should be evaluated using appropriate validation methods.
 
-## Modeling Approach
+## Machine Learning Approach
 
-The workflow uses a proper supervised learning pipeline:
+The project follows a supervised learning workflow.
 
-- stratified train/test split to preserve disease ratio
-- preprocessing inside a `ColumnTransformer`
-- imputation for missing values using median
-- scaling for numerical features
-- one-hot encoding for categorical features
-- models compared:
-  - Logistic Regression
-  - Random Forest Classifier
-- performance measured by:
-  - Accuracy
-  - Precision
-  - Recall
-  - F1-score
-  - ROC-AUC
-  - confusion matrix
+### Data Preprocessing
 
-## Key Insights
+- Stratified train/test split to preserve class proportions.
+- Numerical feature imputation where required.
+- Feature scaling for models that benefit from standardized numerical inputs.
+- One-hot encoding for categorical variables.
+- Preprocessing pipelines using Scikit-learn.
 
-- Missing cholesterol values were not random; they were informative.
-- Recall is especially important in a heart-disease model, because failing to detect a sick patient can be far more serious than a false positive.
-- The model achieved strong classification performance using clinical features.
-- Logistic Regression was a strong and interpretable option, while Random Forest also performed competitively.
-- Top predictors are often related to risk factors such as age, blood pressure, cholesterol, and exercise-related symptoms.
+### Models
 
-## Tech Stack
+- Logistic Regression
+- Random Forest Classifier
+
+### Evaluation Metrics
+
+- Accuracy
+- Precision
+- Recall
+- F1-score
+- ROC-AUC
+- Confusion Matrix
+
+These metrics provide different perspectives on model performance. Recall and false-negative rates are particularly important to examine in healthcare classification.
+
+## Key Areas of Analysis
+
+The project investigates:
+
+- The relationship between clinical indicators and heart disease.
+- The impact of data cleaning and feature engineering.
+- Differences between Logistic Regression and Random Forest.
+- The trade-off between detecting positive cases and generating false positives.
+- Model performance on unseen test data.
+
+Actual findings and model scores are available in the Jupyter Notebook.
+
+## Technology Stack
 
 - Python
 - Pandas
 - NumPy
-- Seaborn
 - Matplotlib
-- scikit-learn
+- Seaborn
+- Scikit-learn
 - Jupyter Notebook
 
-## Files in This Project
+## Project Structure
 
-- `heart_fixed.ipynb` — complete analysis and modeling notebook
-- `heart.csv` — dataset for training and evaluation
+```text
+Heart-Disease-Prediction-ML/
+├── heart.csv
+├── heart_fixed.ipynb
+└── README.md
+```
 
 ## How to Run
+
+### 1. Install the required libraries
+
+Make sure Python and Jupyter Notebook are installed, then run:
+
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn jupyter
+```
+
+### 2. Open the project directory
+
+Navigate to the folder containing the dataset and notebook.
+
+### 3. Launch Jupyter Notebook
 
 ```bash
 jupyter notebook heart_fixed.ipynb
 ```
 
-## Important Note
+### 4. Run the notebook
 
-This is a learning and demonstration project for machine learning and healthcare analytics. It should not be treated as a real medical diagnosis tool.
+Execute the cells sequentially to reproduce the analysis and model evaluation.
 
-## Project Summary
+## Project Objectives
 
-This project demonstrates how to handle real-world healthcare data responsibly, use feature engineering to improve model quality, and compare interpretable and tree-based classifiers for binary medical prediction.
+- Clean and explore healthcare-related data.
+- Investigate features associated with heart disease.
+- Apply feature engineering and preprocessing.
+- Train and compare classification models.
+- Evaluate models using multiple classification metrics.
+- Demonstrate practical machine learning skills.
+
+## Conclusion
+
+Heart Disease Prediction ML is an educational machine learning project demonstrating data preprocessing, exploratory analysis, feature engineering, classification, and model evaluation using clinical data.
+
+## Disclaimer
+
+This project is intended for educational and research purposes only. It is not a medical diagnostic tool and must not be used to make clinical decisions. Predictions require appropriate clinical validation before any real-world healthcare use.
+
+---
+
+**Author:** Shailesh Patil
+
+**Project Type:** Machine Learning — Binary Classification
